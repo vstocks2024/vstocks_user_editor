@@ -2,7 +2,8 @@
 
 import { useTemplate } from '@/app/context/template';
 import dynamic from 'next/dynamic'
-import { usePathname } from 'next/navigation';
+
+import { useParams } from 'next/navigation';
 
 const DynamicEditor = dynamic(() => import('../../../components/Editor').then(a => a.EditorWithStore), {
   ssr: false,
@@ -10,11 +11,11 @@ const DynamicEditor = dynamic(() => import('../../../components/Editor').then(a 
 
 
 function EditorPage() {
-  const pathname=usePathname();
-  const arr=pathname.split("/");
   const template=useTemplate();
-  template.setTemplateId(arr[2]);
-  
+  const params=useParams();
+  template.setTemplateId(params["id"]);
+
+
   return (
     <DynamicEditor />
   );
