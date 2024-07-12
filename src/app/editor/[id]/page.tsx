@@ -1,6 +1,6 @@
 'use client';
 
-import { useTemplate } from '@/app/context/template';
+import { useTemplate } from '@/context/template';
 import dynamic from 'next/dynamic'
 
 import { useParams } from 'next/navigation';

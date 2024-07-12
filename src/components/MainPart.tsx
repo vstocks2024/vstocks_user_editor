@@ -23,7 +23,7 @@ import { Store } from "@/store/Store";
 import { EditorElement } from "@/types";
 import { usePathname, useRouter } from "next/navigation";
 import { isHtmlVideoElement } from "@/utils";
-import { useTemplate } from "@/app/context/template";
+import { useTemplate } from "@/context/template";
 import wait from "@/utils/wait";
 
 export const MainPart = observer(() => {
