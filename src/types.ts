@@ -1,8 +1,9 @@
 import { fabric } from "fabric";
 import { Gradient, Pattern, Shadow } from "fabric/fabric-impl";
+import {z} from "zod";
 
 export type EditorElementBase<T extends string, Properties> = {
-  readonly id: string;
+  id: string;
   fabricObject?: fabric.Object;
   name: string;
   readonly type: T;
@@ -15,7 +16,7 @@ export type VideoEditorElement = EditorElementBase<
   { src: string; readonly elementId: string; imageObject?: fabric.Image, effect: Effect }>;
 export type ImageEditorElement = EditorElementBase<
   "image",
-  {  src: string; readonly elementId: string; imageObject?: fabric.Object, effect: Effect }>;
+  {  src: string | "undefined"; readonly elementId: string; imageObject?: fabric.Object, effect: Effect }>;
 
 export type AudioEditorElement = EditorElementBase<
   "audio",
@@ -24,9 +25,8 @@ export type TextEditorElement = EditorElementBase<
   "text",
   {
     text: string;
-    fontSize: number;
-    fontWeight: number;
-    
+    fontSize?: number | undefined;
+    fontFamily?: string | undefined;
     splittedTexts: fabric.Text[];
     textboxObject?:fabric.Textbox
   }>;
@@ -70,6 +70,9 @@ export type Placement = {
   strokeLineJoin?: string | undefined;
   strokeMiterLimit?: number | undefined;
   shadow?: Shadow | string | undefined;
+  borderScaleFactor?: number | undefined;
+
+  
 
 };
 
@@ -137,3 +140,40 @@ export type MenuOption =
   |"Stickers"
   |"Shapes"
   |null;
+
+export const family_variants_arr={
+'100':'Thin',
+'100italic':'Thin Italic',
+'200':'Extra Light',
+'200italic':'Extra Light Italic',
+'300':"Light", 
+'300italic':"Light Italic",
+'regular':"Regular",
+'italic':"Italic",
+'500':"Medium", 
+'500italic':"Medium Italic",
+'600':"Semi Bold",
+'600italic':"Semi Bold Italic",
+'700':"Bold",
+'700italic':"Bold Italic",
+"800":"Extra Bold",
+'800italic':"Extra Bold Italic",
+"900":"Black",
+'900italic':"Black Italic"
+};
+
+export const Tags = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export const Category=z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});

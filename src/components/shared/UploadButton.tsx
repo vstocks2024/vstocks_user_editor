@@ -6,7 +6,7 @@ export type UploadButtonProps = {
 };
 export const UploadButton = (props: UploadButtonProps) => {
   return (
-    <label htmlFor="fileInput" className={`${props.className} max-w-full`}>
+    <label htmlFor="fileInput" className={`${props.className} hover:bg-[#DDDDDD] bg-[#CCCCCC] text-black w-[90%]`}>
       <input
         id="fileInput"
         type="file"

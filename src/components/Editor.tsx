@@ -1,19 +1,20 @@
 "use client";
-
 import { fabric } from "fabric";
 import React, { useEffect, useState } from "react";
 import { StoreContext } from "@/store";
 import { observer } from "mobx-react";
-import { Resources } from "@/components/Resources";
+import { Resources } from "../components/Resources";
 import { ElementsPanel } from "@/components/panels/ElementsPanel";
-import { Menu } from "@/components/Menu";
-import { TimeLine } from "@/components/TimeLine";
+import { Menu } from "../components/Menu";
+import { TimeLine } from "../components/TimeLine";
 import "@/utils/fabric-utils";
 import { MainPart } from "./MainPart";
-import { BackCustomize } from "@/components/BackCustomize";
-import { MainCanvas } from "@/components/MainCanvas";
-import { CanvasFooter } from "@/components/CanvasFooter";
+import { MainCanvas } from "../components/MainCanvas";
+import { CanvasFooter } from "../components/CanvasFooter";
 import { Store } from "@/store/Store";
+import { BackCustomize } from "./BackCustomize";
+import { MainLayout } from "./layouts/MainLayout";
+
 
 export const EditorWithStore = () => {
   const [store] = useState(new Store());
@@ -24,21 +25,29 @@ export const EditorWithStore = () => {
   );
 }
 
+
+
 export const Editor = observer(() => {
   const store = React.useContext(StoreContext);
   document.title = "Editor--VSTOCKS";
 
+
+
   useEffect(() => {
-    const canvas = new fabric.Canvas("lower-canvas", {
+    console.log(store.width,store.height);
+    var canvas = new fabric.Canvas("lower-canvas",{
       height: store.height,
       width: store.width,
       backgroundColor: "#242728",
+      
     });
     fabric.Object.prototype.transparentCorners = false;
     fabric.Object.prototype.cornerColor = "#00a0f5";
     fabric.Object.prototype.cornerStyle = "circle";
     fabric.Object.prototype.cornerStrokeColor = "#0063d8";
     fabric.Object.prototype.cornerSize = 10;
+    
+    
 
     // canvas mouse down without target should deselect active object
     canvas.on("mouse:down", function (e) {
@@ -48,29 +57,35 @@ export const Editor = observer(() => {
     });
 
     store.setCanvas(canvas);
+
+    
+    
     fabric.util.requestAnimFrame(function render() {
       canvas.renderAll();
       fabric.util.requestAnimFrame(render);
+      
     });
+    
   }, []);
   return (
-    <React.Fragment>
-      <main className="flex flex-col items-center justify-between border border-white m-1 p-1  w-full">
-        <div className="flex flex-col border border-green-500 m-1  w-full">
-          <BackCustomize />
-          </div><div className="flex flex-col border border-green-500 m-1 p-1 w-full">
+  <MainLayout>
+      <main className="relative flex flex-col items-center justify-between   w-full">
+     <div className="flex flex-col  w-full">
+      <BackCustomize/>
           <MainPart />
         </div>
-        <div className="flex flex-row items-start justify-between w-full border border-pink-500 m-1 p-1">
+        {/* h-[79.5632vh] */}
+        <div className=" w-full  h-[510px] ">
+        <div className="flex flex-row items-start h-full justify-between w-full">
           <Menu />
           {store.selectedMenuOption ? <Resources /> : null}
           <MainCanvas />
           <ElementsPanel elementtype={store.selectedElement?.type} />
           <TimeLine />
         </div>
+        </div>
         <CanvasFooter />
       </main>
-      
-    </React.Fragment>
+      </MainLayout>
   );
 });
