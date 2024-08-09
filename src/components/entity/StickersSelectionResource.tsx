@@ -16,4 +16,3 @@ export const StickerSelectionResource = observer(({name}:StickersSelectionResour
   )
 })
 
-

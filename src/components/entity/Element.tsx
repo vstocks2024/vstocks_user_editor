@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { EditorElement } from "@/types";
+import { EditorElement } from "../..//types";
 import { StoreContext } from "@/store";
 import { observer } from "mobx-react";
 import { MdOutlineTextFields, MdMovie, MdDelete, MdLockOpen , MdLock } from "react-icons/md";
@@ -98,7 +98,7 @@ export const Element = observer((props: ElementProps) => {
         className= "text-white mr-1 text-xs py-0 px-1 rounded"
         onClick={(e) => {
           //handleLockButton();
-          if(!element.fabricObject) return;
+          if(element.fabricObject=== undefined) return;
           element.fabricObject.hasControls=!element.fabricObject.hasControls
           element.fabricObject.lockMovementX=!element.fabricObject.lockMovementX;
           element.fabricObject.lockMovementY=!element.fabricObject.lockMovementY;
@@ -118,6 +118,8 @@ export const Element = observer((props: ElementProps) => {
       <button
         className= "text-white mr-1 text-xs py-0 px-1 rounded"
         onClick={(e) => {
+          
+          
           e.preventDefault();
           e.stopPropagation();
         }}
